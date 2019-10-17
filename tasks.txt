@@ -1,0 +1,21 @@
+when login, I want to see a list of my todo's not other peoples, and be able to add new ones and edit the ones that are there
+
+- (DONE) create my todos component
+  - list of my todos
+  - add new todo
+  - edit a todo
+
+- todos service
+  - fetch todos (only mine)
+  - add todo
+  - update todo
+
+- todos controller
+  - need to not hardcode the userId here
+- todos routes for BE
+
+- (DONE) todo route for todos component
+
+- (DONE) todo module to hold the above stuff
+
+- (DONE) update the login to navigate to new todos component route
