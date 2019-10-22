@@ -1,40 +1,73 @@
-const validator = require('validator');
 const sql = require('mssql');
-const bcrypt = require('bcrypt');
-const bcryptPromise = require('bcrypt-promise');
 const { poolPromise } = require('../data/db');
-const jwt = require('jsonwebtoken');
-
-const getAllTodos = async function(req) {
-    const pool = await poolPromise;
-    let result;
-
-    try {
-        result = await pool
-            .request()
-            .input('UserId', sql.Int, req.user.Id)
-            .query('select * from todos where UserId = @UserId');
-    } catch (e) {
-        throwError(e.message);
-    }
-
-    return result.recordset;
-};
 
 getAll = async function(req, res) {
     // format request
-    res.setHeader('ContentType', 'application/json');
 
-    let err, todos;
+    let todos;
 
-    // now call the db
-    [err, todos] = await executeOrThrow(getAllTodos(req));
-    if (err) {
-        return returnError(res, err, 422);
+    res.setHeader('Content-Type', 'application/json');
+
+    const pool = await poolPromise;
+
+    try {
+        todos = await pool
+            .request()
+            .input('Name', sql.VarChar, req.query.Name)
+            .input('UserId', sql.Int, req.user.Id)
+            .query(
+                // eslint-disable-next-line quotes
+                `select * from ToDos where UserId = @UserId and Name LIKE '%' + @Name + '%' order by OrderId ASC`,
+            );
+        todos = todos.recordset;
+    } catch (e) {
+        returnError(res, e, 500);
     }
 
-    // return results
-    return returnSuccessResponse(res, todos, 201);
+    return res.json(todos);
 };
 
 module.exports.getAll = getAll;
+
+const create = async function(req, res) {
+    res.setHeader('ContentType', 'application/json');
+    const body = req.body;
+
+    if (!body.Name) {
+        return returnError(res, 'Please enter a name', 422);
+    }
+    const pool = await poolPromise;
+    let orderId;
+
+    try {
+        orderId = await pool
+            .request()
+            .input('UserId', sql.Int, req.user.Id)
+            .query(
+                'select max(OrderId) as OrderId from ToDos where UserId = @UserId',
+            );
+        orderId = orderId.recordset.shift().OrderId;
+    } catch (e) {
+        returnError(res, e, 500);
+    }
+
+    // initialize if it's the very first todo
+    orderId = orderId || orderId === 0 ? orderId + 1 : 0;
+    try {
+        toDo = await pool
+            .request()
+            .input('Name', sql.VarChar, body.Name)
+            .input('OrderId', sql.Int, orderId)
+            .input('UserId', sql.Int, req.user.Id)
+            .query(
+                'INSERT INTO ToDos ([Name], [UserId], [OrderId]) OUTPUT inserted.* values (@Name, @UserId, @OrderId)',
+            );
+        toDo = toDo.recordset.shift();
+    } catch (e) {
+        returnError(res, e, 500);
+    }
+
+    return returnSuccessResponse(res, toDo, 201);
+};
+
+module.exports.create = create;

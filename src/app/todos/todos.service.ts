@@ -13,7 +13,13 @@ export interface ITodo {
 export class TodosService {
     constructor(private http: HttpClient) {}
 
-    getAll(): Observable<ITodo[]> {
-        return this.http.get<ITodo[]>('http://localhost:3000/todos');
+    getAll(name: string): Observable<ITodo[]> {
+        return this.http.get<ITodo[]>(
+            `http://localhost:3000/todos?Name=${name}`,
+        );
+    }
+
+    addToDo(toDo: ITodo): Observable<ITodo> {
+        return this.http.post<ITodo>('http://localhost:3000/todos', toDo);
     }
 }

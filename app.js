@@ -73,6 +73,11 @@ app.get(
     passport.authenticate('jwt', { session: false }),
     todosController.getAll,
 );
+app.post(
+    '/todos',
+    passport.authenticate('jwt', { session: false }),
+    todosController.create,
+);
 
 console.log('SERVER READY');
 module.exports = app;

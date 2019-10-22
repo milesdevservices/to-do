@@ -1,5 +1,13 @@
 <h2>My Todos</h2>
-
+<div class="row form-group">
+    <div class="col-md-8">
+        <label for="search">Search:</label>
+        <input class="form-control" id="search" (keyup)="search($event)" [(ngModel)]="searchText" name="search"
+            placeholder="Enter text to search..." autocomplete="off">
+    </div>
+    <div class="col-md-2"><button type="button" [routerLink]="['/todos/add']" routerLinkActive="router-link-active"
+            class="btn btn-primary">Add ToDo</button></div>
+</div>
 <ul>
     <li *ngFor="let todo of todos">{{ todo.Name }}</li>
 </ul>
