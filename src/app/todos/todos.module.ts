@@ -8,9 +8,10 @@ import { CommonModule } from '@angular/common';
 import { TodosRoutingModule } from './todos-routing.module';
 import { MyTodosComponent } from './my-todos/my-todos.component';
 import { ToDoInfoComponent } from './my-todos/to-do-info/to-do-info.component';
+import { TodosHeaderComponent } from './my-todos/todos-header/todos-header.component';
 
 @NgModule({
-    declarations: [MyTodosComponent, ToDoInfoComponent],
+    declarations: [MyTodosComponent, ToDoInfoComponent, TodosHeaderComponent],
     imports: [
         CommonModule,
         FormsModule,

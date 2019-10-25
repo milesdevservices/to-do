@@ -4,6 +4,7 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
+    selector: 'app-my-todos',
     templateUrl: './my-todos.component.html',
 })
 export class MyTodosComponent implements OnInit, OnDestroy {
