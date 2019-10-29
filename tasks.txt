@@ -1,21 +1,24 @@
-when login, I want to see a list of my todo's not other peoples, and be able to add new ones and edit the ones that are there
+Day 7 - Chris 10/28
+-Review
+--[Quiz](https://mt.striven.com/Collaboration/Feedback/FeedbackInfo.aspx?FeedbackID=1482&FeedbackTypeID=2)
+-Styling the list page
+--bootstrap list group
+--bootstrap grid system
+-Contextual understanding of the user and what they can do
+--Role specific logic in the components
+-Go over the auth service
+--Where is the information coming from
+--What does the currentlyLoggedInUser hold
+-AuthGuard and RoleGuard
+-Work Exercise
+--Apply AuthGuard to all tavern routes
+--Update Add Room button to only show if the user is an Owner
+--Add Book a Stay page using the child router (start)
+---Controls
+----Guest dropdown select
+-----Just Name and Id from Guests table
+----Date of Stay
+----Room dropdown select
+-----Select should have name and price listed in the dropdown
+-----Highest price at top and lowest at bottom
 
-- (DONE) create my todos component
-  - list of my todos
-  - add new todo
-  - edit a todo
-
-- todos service
-  - fetch todos (only mine)
-  - add todo
-  - update todo
-
-- todos controller
-  - need to not hardcode the userId here
-- todos routes for BE
-
-- (DONE) todo route for todos component
-
-- (DONE) todo module to hold the above stuff
-
-- (DONE) update the login to navigate to new todos component route
