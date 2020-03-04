@@ -1,20 +1,50 @@
-<h2>Login</h2>
+<h2>{{ showSignup ? 'Sign up' : 'Login' }}</h2>
 <form>
-  <div class="row">
-    <div class="col-md-6">
-      <label>Email</label>
-      <input type="text" class="form-control" [(ngModel)]="email" name="email" />
-      <label>Password</label>
-      <input type="password" class="form-control" [(ngModel)]="password" name="password" />
+    <div class="row">
+        <div class="col-md-6">
+            <label>Email</label>
+            <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="email"
+                name="email"
+            />
+            <label>Password</label>
+            <input
+                type="password"
+                class="form-control"
+                [(ngModel)]="password"
+                name="password"
+            />
+        </div>
+        <div class="col-md-6"></div>
     </div>
-    <div class="col-md-6"></div>
-  </div>
-  <br />
-  <div class="row">
-    <div class="col-md-6">
-      <button type="submit" class="btn btn-primary" (click)="login()">
-        Submit
-      </button>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <button
+                *ngIf="!showSignup"
+                type="submit"
+                class="btn btn-primary"
+                (click)="login()"
+            >
+                Submit
+            </button>
+            <button
+                *ngIf="showSignup"
+                type="submit"
+                class="btn btn-primary"
+                (click)="signup()"
+            >
+                Sign up
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary float-right"
+                (click)="toggleSignup()"
+            >
+                {{ showSignup ? 'Cancel' : 'Sign up' }}
+            </button>
+        </div>
     </div>
-  </div>
 </form>

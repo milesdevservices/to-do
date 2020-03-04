@@ -8,11 +8,17 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
     email = '';
     password = '';
+    showSignup = false;
 
     constructor(private router: Router, private authService: AuthService) {}
 
+    toggleSignup(): void {
+        this.showSignup = !this.showSignup;
+        this.email = '';
+        this.password = '';
+    }
+
     login(): void {
-        console.log(this.email);
         this.authService.login(this.email, this.password).subscribe(
             (response) => {
                 if (response.success) {
@@ -24,5 +30,13 @@ export class LoginComponent {
                 console.log('username/password incorrect');
             },
         );
+    }
+
+    signup(): void {
+        const payload = {
+            email: this.email,
+            password: this.password,
+        };
+        console.log(payload);
     }
 }
