@@ -8,6 +8,9 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
     email = '';
     password = '';
+    first = '';
+    last = '';
+    phone = '';
     showSignup = false;
 
     constructor(private router: Router, private authService: AuthService) {}
@@ -16,6 +19,9 @@ export class LoginComponent {
         this.showSignup = !this.showSignup;
         this.email = '';
         this.password = '';
+        this.first = '';
+        this.last = '';
+        this.phone = '';
     }
 
     login(): void {
@@ -34,9 +40,20 @@ export class LoginComponent {
 
     signup(): void {
         const payload = {
-            email: this.email,
-            password: this.password,
+            Email: this.email,
+            Password: this.password,
+            First: this.first,
+            Last: this.last,
+            Phone: this.phone,
         };
-        console.log(payload);
+
+        this.authService.signup(payload).subscribe(
+            (user) => {
+                this.router.navigateByUrl('/login');
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
     }
 }

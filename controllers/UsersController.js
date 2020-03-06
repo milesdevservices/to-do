@@ -54,6 +54,7 @@ create = async function(req, res) {
     const body = req.body;
 
     if (!body.Email) {
+        console.log('here');
         return returnError(res, 'Please enter an email to register', 422);
     } else if (!body.Password) {
         return returnError(res, 'Please enter a password to register', 422);

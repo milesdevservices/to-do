@@ -2,47 +2,29 @@
 <form>
     <div class="row">
         <div class="col-md-6">
+            <label>First Name</label>
+            <input type="text" class="form-control" [(ngModel)]="first" name="first" />
+            <label>Last Name</label>
+            <input type="text" class="form-control" [(ngModel)]="last" name="last" />
+            <label>Phone Number</label>
+            <input type="text" class="form-control" [(ngModel)]="phone" name="phone" />
             <label>Email</label>
-            <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="email"
-                name="email"
-            />
+            <input type="text" class="form-control" [(ngModel)]="email" name="email" />
             <label>Password</label>
-            <input
-                type="password"
-                class="form-control"
-                [(ngModel)]="password"
-                name="password"
-            />
+            <input type="password" class="form-control" [(ngModel)]="password" name="password" />
         </div>
         <div class="col-md-6"></div>
     </div>
     <br />
     <div class="row">
         <div class="col-md-6">
-            <button
-                *ngIf="!showSignup"
-                type="submit"
-                class="btn btn-primary"
-                (click)="login()"
-            >
+            <button *ngIf="!showSignup" type="submit" class="btn btn-primary" (click)="login()">
                 Submit
             </button>
-            <button
-                *ngIf="showSignup"
-                type="submit"
-                class="btn btn-primary"
-                (click)="signup()"
-            >
+            <button *ngIf="showSignup" type="submit" class="btn btn-primary" (click)="signup()">
                 Sign up
             </button>
-            <button
-                type="button"
-                class="btn btn-secondary float-right"
-                (click)="toggleSignup()"
-            >
+            <button type="button" class="btn btn-secondary float-right" (click)="toggleSignup()">
                 {{ showSignup ? 'Cancel' : 'Sign up' }}
             </button>
         </div>
