@@ -3,6 +3,7 @@ const express = require('express');
 require('dotenv').config();
 require('./global_functions');
 const userController = require('./controllers/UsersController');
+const todoController = require('./controllers/ToDosController');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -20,7 +21,7 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.jwt_encryption;
 
 passport.use(
-    new JwtStrategy(opts, async(jwtPayload, done) => {
+    new JwtStrategy(opts, async (jwtPayload, done) => {
         let err, user;
         const pool = await poolPromise;
 
@@ -66,6 +67,10 @@ app.use((req, res, next) => {
 
 app.post('/users', userController.create);
 app.post('/login', userController.login);
-
+app.get(
+    '/todos',
+    // passport.authenticate('jwt', { session: false }),
+    todoController.getAll,
+);
 console.log('SERVER READY');
 module.exports = app;

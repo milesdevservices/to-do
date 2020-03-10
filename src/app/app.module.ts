@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './common/auth/login/login.component';
 import { TokenInterceptor } from './common/auth/token.interceptor';
 import { HomeComponent } from './home.component';
+import { ToDoModule } from './to-do/to-do.module';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -22,6 +23,7 @@ import { HomeComponent } from './home.component';
         FormsModule,
         HttpClientModule,
         NgbModule,
+        ToDoModule,
         AppRoutingModule,
         CookieModule.forRoot(),
     ],
