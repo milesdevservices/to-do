@@ -1,0 +1,20 @@
+<!-- Add a form
+save the form
+validation on the form
+-->
+<h2>Add ToDo</h2>
+
+<form #form="ngForm" (submit)=saveToDo(form)>
+    <div class="row">
+        <div class="col-md-6">
+            <input type="text" class="form-control" name="Name" ngModel #Name="ngModel" required>
+            <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="alert alert-danger">
+                <div *ngIf="Name.errors.required">
+                    Name is Required.
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>

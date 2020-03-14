@@ -13,7 +13,13 @@ export interface IToDo {
 export class ToDoService {
     constructor(private http: HttpClient) {}
 
-    get(): Observable<IToDo[]> {
-        return this.http.get<IToDo[]>('http://localhost:3000/todos');
+    get(searchText: string): Observable<IToDo[]> {
+        return this.http.get<IToDo[]>(
+            `http://localhost:3000/todos?Search=${searchText}`,
+        );
+    }
+
+    saveTodo(toDo: IToDo): Observable<IToDo> {
+        return this.http.post<IToDo>('http://localhost:3000/todo', toDo);
     }
 }

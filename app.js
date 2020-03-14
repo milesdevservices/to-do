@@ -69,8 +69,13 @@ app.post('/users', userController.create);
 app.post('/login', userController.login);
 app.get(
     '/todos',
-    // passport.authenticate('jwt', { session: false }),
+    passport.authenticate('jwt', { session: false }),
     todoController.getAll,
+);
+app.post(
+    '/todo',
+    passport.authenticate('jwt', { session: false }),
+    todoController.Create,
 );
 console.log('SERVER READY');
 module.exports = app;

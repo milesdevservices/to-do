@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ToDoListComponent } from './list/to-do-list.component';
 import { AuthGuard } from '../common/auth/auth.guard';
+import { ToDoInfoComponent } from './to-do-info/to-do-info.component';
 
 const todoRoutes: Routes = [
     { path: 'todos', component: ToDoListComponent, canActivate: [AuthGuard] },
+    { path: 'todo/0', component: ToDoInfoComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
