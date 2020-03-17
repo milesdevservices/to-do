@@ -19,7 +19,19 @@ export class ToDoService {
         );
     }
 
+    getById(id: number): Observable<IToDo> {
+        return this.http.get<IToDo>(`http://localhost:3000/todos/${id}`);
+    }
+
     saveTodo(toDo: IToDo): Observable<IToDo> {
-        return this.http.post<IToDo>('http://localhost:3000/todo', toDo);
+        const isEdit = toDo.Id > 0;
+        if (isEdit) {
+            return this.http.put<IToDo>(
+                `http://localhost:3000/todos/${toDo.Id}`,
+                toDo,
+            );
+        } else {
+            return this.http.post<IToDo>('http://localhost:3000/todo', toDo);
+        }
     }
 }

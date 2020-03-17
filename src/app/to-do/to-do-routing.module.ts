@@ -6,7 +6,11 @@ import { ToDoInfoComponent } from './to-do-info/to-do-info.component';
 
 const todoRoutes: Routes = [
     { path: 'todos', component: ToDoListComponent, canActivate: [AuthGuard] },
-    { path: 'todos/0', component: ToDoInfoComponent, canActivate: [AuthGuard] },
+    {
+        path: 'todos/:todoId',
+        component: ToDoInfoComponent,
+        canActivate: [AuthGuard],
+    },
 ];
 
 @NgModule({

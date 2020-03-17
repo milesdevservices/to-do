@@ -2,19 +2,29 @@
 save the form
 validation on the form
 -->
-<h2>Add ToDo</h2>
+<h2>{{ isNew ? 'Add' : 'Edit' }} ToDo</h2>
 
-<form #form="ngForm" (submit)=saveToDo(form)>
+<form [formGroup]="todoForm" (submit)="saveToDo()">
     <div class="row">
         <div class="col-md-6">
-            <input type="text" class="form-control" name="Name" ngModel #Name="ngModel" required>
-            <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="alert alert-danger">
-                <div *ngIf="Name.errors.required">
+            <input type="text" class="form-control" formControlName="Name" />
+            <div
+                *ngIf="
+                    todoForm.controls.Name.invalid &&
+                    (todoForm.controls.Name.dirty ||
+                        todoForm.controls.Name.touched)
+                "
+                class="alert alert-danger"
+            >
+                <div *ngIf="todoForm.controls.Name.errors.required">
                     Name is Required.
+                </div>
+                <div *ngIf="todoForm.controls.Name.errors.maxlength">
+                    Max length for Name is 50.
                 </div>
             </div>
         </div>
     </div>
-    <br>
+    <br />
     <button type="submit" class="btn btn-success">Save</button>
 </form>

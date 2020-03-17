@@ -72,10 +72,20 @@ app.get(
     passport.authenticate('jwt', { session: false }),
     todoController.getAll,
 );
+app.get(
+    '/todos/:todoId',
+    passport.authenticate('jwt', { session: false }),
+    todoController.getById,
+);
 app.post(
     '/todo',
     passport.authenticate('jwt', { session: false }),
     todoController.Create,
+);
+app.put(
+    '/todos/:todoId',
+    passport.authenticate('jwt', { session: false }),
+    todoController.Edit,
 );
 console.log('SERVER READY');
 module.exports = app;

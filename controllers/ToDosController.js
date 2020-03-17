@@ -1,6 +1,28 @@
 const sql = require('mssql');
 const { poolPromise } = require('../data/db');
 
+const getById = async function(req, res) {
+    let todoId = parseInt(req.params.todoId);
+    res.setHeader('Content-Type', 'application/json');
+    let todoPool;
+    let todo;
+    const pool = await poolPromise;
+
+    try {
+        todoPool = await pool
+            .request()
+            .input('Id', sql.Int, todoId)
+            .query('select * from ToDos where Id = @Id');
+        todo = todoPool.recordset.shift();
+    } catch (e) {
+        returnError(res, e, 500);
+    }
+
+    return returnSuccessResponse(res, todo, 200);
+};
+
+module.exports.getById = getById;
+
 const getAll = async function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     let todoPool;
@@ -71,3 +93,35 @@ const Create = async function(req, res) {
 };
 
 module.exports.Create = Create;
+
+const Edit = async function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    let todoPool;
+    let toDo = req.body;
+
+    if (!toDo.Name) {
+        return returnError(res, 'Please enter a Name', 422);
+    }
+
+    const pool = await poolPromise;
+
+    try {
+        todoPool = await pool
+            .request()
+            .input('Id', sql.Int, toDo.Id)
+            .input('Name', sql.VarChar, toDo.Name)
+            // .input('OrderId', sql.Int, orderId)
+            // .input('UserId', sql.Int, req.user.Id)
+            .query(
+                // eslint-disable-next-line quotes
+                `Update ToDos Set Name = @Name Where Id = @Id`,
+            );
+        // toDo = todoPool.recordset.shift();
+    } catch (e) {
+        returnError(res, e, 500);
+    }
+
+    return returnSuccessResponse(res, toDo, 200);
+};
+
+module.exports.Edit = Edit;

@@ -10,11 +10,17 @@
         />
     </div>
     <div class="col-md-2">
-        <button class="btn btn-primary" routerLink="/todos/0">
+        <button class="btn btn-primary" routerLink="/todos/add">
             Add ToDo
         </button>
     </div>
 </div>
 <ul class="list-group">
-    <li *ngFor="let todo of todos" class="list-group-item">{{ todo.Name }}</li>
+    <li
+        *ngFor="let todo of todos"
+        class="list-group-item"
+        [routerLink]="'/todos/' + todo.Id"
+    >
+        {{ todo.Name }}
+    </li>
 </ul>
