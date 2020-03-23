@@ -29,7 +29,7 @@ export class LoginComponent {
             (response) => {
                 if (response.success) {
                     console.log('successful login');
-                    this.router.navigateByUrl('/home');
+                    this.router.navigateByUrl('/todos');
                 }
             },
             (error) => {

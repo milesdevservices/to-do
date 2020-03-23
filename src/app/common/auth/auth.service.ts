@@ -6,11 +6,11 @@ import { CookieService } from 'ngx-cookie';
 import { UserRoles } from '../user-roles';
 
 export interface IUser {
-    first: string;
-    last: string;
+    First: string;
+    Last: string;
     email: string;
     phone: string;
-    userRoleId: number;
+    UserRoleId: number;
 }
 
 export interface ILoginResponse {
@@ -54,7 +54,7 @@ export class AuthService {
         const currentUser = this.currentUser.getValue();
         return currentUser &&
             currentUser.user &&
-            currentUser.user.userRoleId === UserRoles.Admin
+            currentUser.user.UserRoleId === UserRoles.Admin
             ? true
             : false;
     }
@@ -85,6 +85,10 @@ export class AuthService {
     }
 
     setUser(user: ICurrentlyLoggedInUser): void {
+        if (user) {
+            const userObj = JSON.parse(String(user.user));
+            user.user = userObj;
+        }
         this.currentUser.next(user);
         if (user) {
             const userAsJson = JSON.stringify(user);
