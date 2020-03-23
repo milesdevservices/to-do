@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     templateUrl: './login.component.html',
@@ -13,7 +14,11 @@ export class LoginComponent {
     phone = '';
     showSignup = false;
 
-    constructor(private router: Router, private authService: AuthService) {}
+    constructor(
+        private router: Router,
+        private authService: AuthService,
+        private toastrService: ToastrService,
+    ) {}
 
     toggleSignup(): void {
         this.showSignup = !this.showSignup;
@@ -33,7 +38,9 @@ export class LoginComponent {
                 }
             },
             (error) => {
-                console.log('username/password incorrect');
+                this.toastrService.error(
+                    `Username and/or password is not recognized`,
+                );
             },
         );
     }

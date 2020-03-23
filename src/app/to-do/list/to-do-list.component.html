@@ -17,10 +17,13 @@
 </div>
 <ul class="list-group">
     <li
-        *ngFor="let todo of todos"
+        *ngFor="let todoItem of todos"
         class="list-group-item"
-        [routerLink]="'/todos/' + todo.Id"
+        [routerLink]="'/todos/' + todoItem.Id"
     >
-        {{ todo.Name }}
+        <app-todo-list-item
+            [todo]="todoItem"
+            (rebindList)="searchTodos($event)"
+        ></app-todo-list-item>
     </li>
 </ul>

@@ -14,6 +14,8 @@ import { TokenInterceptor } from './common/auth/token.interceptor';
 import { HomeComponent } from './home.component';
 import { ToDoModule } from './to-do/to-do.module';
 
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
     bootstrap: [AppComponent],
     declarations: [AppComponent, LoginComponent, HomeComponent],
@@ -26,6 +28,9 @@ import { ToDoModule } from './to-do/to-do.module';
         ToDoModule,
         AppRoutingModule,
         CookieModule.forRoot(),
+        ToastrModule.forRoot({
+            positionClass: 'toast-bottom-right',
+        }),
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

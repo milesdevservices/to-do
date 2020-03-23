@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { IToDo, ToDoService } from '../to-do.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-to-do-info',
@@ -23,6 +25,7 @@ export class ToDoInfoComponent implements OnInit {
         private toDosService: ToDoService,
         private router: Router,
         private route: ActivatedRoute,
+        private toastrService: ToastrService,
     ) {}
 
     ngOnInit(): void {
@@ -41,9 +44,17 @@ export class ToDoInfoComponent implements OnInit {
     saveToDo(): void {
         if (this.todoForm.valid) {
             this.todo.Name = this.todoForm.value.Name;
-            this.toDosService.saveTodo(this.todo).subscribe((todo: IToDo) => {
-                this.router.navigate(['/todos']);
-            });
+            this.toDosService.saveTodo(this.todo).subscribe(
+                (todo: IToDo) => {
+                    this.router.navigate(['/todos']);
+                    this.toastrService.success('Todo saved');
+                },
+                (errorResponse: HttpErrorResponse) => {
+                    const message =
+                        errorResponse.error.error || 'Todo save failed';
+                    this.toastrService.error(message);
+                },
+            );
         }
     }
 }

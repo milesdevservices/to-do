@@ -27,9 +27,18 @@ export class ToDoListComponent implements OnInit, OnDestroy {
     ) {
         this.subscription = this.searchUpdated
             .pipe(debounceTime(300), distinctUntilChanged())
-            .subscribe((searchValue) => {
-                this.searchTodos(searchValue);
+            .subscribe(() => {
+                this.searchTodos();
             });
+    }
+
+    ngOnInit(): void {
+        this.todoService.get('').subscribe((returnedTodos) => {
+            this.todos = returnedTodos;
+        });
+        console.log('isadmin', this.authService.isAdmin());
+
+        this.isAdmin = this.authService.isAdmin();
     }
 
     ngOnDestroy(): void {
@@ -40,18 +49,9 @@ export class ToDoListComponent implements OnInit, OnDestroy {
         this.searchUpdated.next($event.target.value);
     }
 
-    searchTodos(searchValue: string) {
-        this.todoService.get(searchValue).subscribe((toDos) => {
+    searchTodos() {
+        this.todoService.get(this.searchText).subscribe((toDos) => {
             this.todos = toDos;
         });
-    }
-
-    ngOnInit(): void {
-        this.todoService.get('').subscribe((returnedTodos) => {
-            this.todos = returnedTodos;
-        });
-        console.log('isadmin', this.authService.isAdmin());
-
-        this.isAdmin = this.authService.isAdmin();
     }
 }

@@ -125,3 +125,27 @@ const Edit = async function(req, res) {
 };
 
 module.exports.Edit = Edit;
+
+const Delete = async function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    let todoId = parseInt(req.params.todoId);
+    let todoPool;
+
+    const pool = await poolPromise;
+
+    try {
+        todoPool = await pool
+            .request()
+            .input('Id', sql.Int, todoId)
+            .query(
+                // eslint-disable-next-line quotes
+                `Delete From ToDos Where Id = @Id`,
+            );
+    } catch (e) {
+        returnError(res, e, 500);
+    }
+
+    return returnSuccessResponse(res, { success: true }, 200);
+};
+
+module.exports.Delete = Delete;

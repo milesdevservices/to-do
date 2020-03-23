@@ -87,5 +87,10 @@ app.put(
     passport.authenticate('jwt', { session: false }),
     todoController.Edit,
 );
+app.delete(
+    '/todos/:todoId',
+    passport.authenticate('jwt', { session: false }),
+    todoController.Delete,
+);
 console.log('SERVER READY');
 module.exports = app;

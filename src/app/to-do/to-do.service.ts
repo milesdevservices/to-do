@@ -34,4 +34,8 @@ export class ToDoService {
             return this.http.post<IToDo>('http://localhost:3000/todo', toDo);
         }
     }
+
+    delete(id: number): Observable<any> {
+        return this.http.delete<any>(`http://localhost:3000/todos/${id}`);
+    }
 }
