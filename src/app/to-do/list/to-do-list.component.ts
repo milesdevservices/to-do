@@ -5,6 +5,13 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AuthService } from '../../common/auth/auth.service';
 
 @Component({
+    styles: [
+        `
+            .list-group-item {
+                cursor: pointer;
+            }
+        `,
+    ],
     templateUrl: './to-do-list.component.html',
 })
 export class ToDoListComponent implements OnInit, OnDestroy {
